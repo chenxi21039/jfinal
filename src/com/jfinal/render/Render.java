@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2015, James Zhan 詹波 (jfinal@126.com).
+ * Copyright (c) 2011-2016, James Zhan 詹波 (jfinal@126.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,26 +32,26 @@ public abstract class Render {
 	private static String encoding = Const.DEFAULT_ENCODING;
 	private static boolean devMode = Const.DEFAULT_DEV_MODE;
 	
-	static final void init(String encoding, boolean devMode) {
+	static void init(String encoding, boolean devMode) {
 		Render.encoding = encoding;
 		Render.devMode = devMode;
 	}
 	
-	public static final String getEncoding() {
+	public static String getEncoding() {
 		return encoding;
 	}
 	
-	public static final boolean getDevMode() {
+	public static boolean getDevMode() {
 		return devMode;
 	}
 	
-	public final Render setContext(HttpServletRequest request, HttpServletResponse response) {
+	public Render setContext(HttpServletRequest request, HttpServletResponse response) {
 		this.request = request;
 		this.response = response;
 		return this;
 	}
 	
-	public final Render setContext(HttpServletRequest request, HttpServletResponse response, String viewPath) {
+	public Render setContext(HttpServletRequest request, HttpServletResponse response, String viewPath) {
 		this.request = request;
 		this.response = response;
 		if (view != null && !view.startsWith("/"))

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2015, James Zhan 詹波 (jfinal@126.com).
+ * Copyright (c) 2011-2016, James Zhan 詹波 (jfinal@126.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package com.jfinal.kit;
 
 import java.io.File;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.jfinal.core.Const;
 
@@ -27,7 +26,7 @@ import com.jfinal.core.Const;
 public class PropKit {
 	
 	private static Prop prop = null;
-	private static final Map<String, Prop> map = new ConcurrentHashMap<String, Prop>();
+	private static final ConcurrentHashMap<String, Prop> map = new ConcurrentHashMap<String, Prop>();
 	
 	private PropKit() {}
 	

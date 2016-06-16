@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2015, James Zhan 詹波 (jfinal@126.com).
+ * Copyright (c) 2011-2016, James Zhan 詹波 (jfinal@126.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public class Prop {
 			throw new RuntimeException("Error loading properties file.", e);
 		}
 		finally {
-			if (inputStream != null) try {inputStream.close();} catch (IOException e) {e.printStackTrace();}
+			if (inputStream != null) try {inputStream.close();} catch (IOException e) {LogKit.error(e.getMessage(), e);}
 		}
 	}
 	
@@ -90,7 +90,7 @@ public class Prop {
 		if (file == null)
 			throw new IllegalArgumentException("File can not be null.");
 		if (file.isFile() == false)
-			throw new IllegalArgumentException("Not a file : " + file.getName());
+			throw new IllegalArgumentException("File not found : " + file.getName());
 		
 		InputStream inputStream = null;
 		try {
@@ -101,7 +101,7 @@ public class Prop {
 			throw new RuntimeException("Error loading properties file.", e);
 		}
 		finally {
-			if (inputStream != null) try {inputStream.close();} catch (IOException e) {e.printStackTrace();}
+			if (inputStream != null) try {inputStream.close();} catch (IOException e) {LogKit.error(e.getMessage(), e);}
 		}
 	}
 	
@@ -110,38 +110,46 @@ public class Prop {
 	}
 	
 	public String get(String key, String defaultValue) {
-		String value = get(key);
-		return (value != null) ? value : defaultValue;
+		return properties.getProperty(key, defaultValue);
 	}
 	
 	public Integer getInt(String key) {
-		String value = get(key);
-		return (value != null) ? Integer.parseInt(value) : null;
+		return getInt(key, null);
 	}
 	
 	public Integer getInt(String key, Integer defaultValue) {
-		String value = get(key);
-		return (value != null) ? Integer.parseInt(value) : defaultValue;
+		String value = properties.getProperty(key);
+		if (value != null)
+			return Integer.parseInt(value.trim());
+		return defaultValue;
 	}
 	
 	public Long getLong(String key) {
-		String value = get(key);
-		return (value != null) ? Long.parseLong(value) : null;
+		return getLong(key, null);
 	}
 	
 	public Long getLong(String key, Long defaultValue) {
-		String value = get(key);
-		return (value != null) ? Long.parseLong(value) : defaultValue;
+		String value = properties.getProperty(key);
+		if (value != null)
+			return Long.parseLong(value.trim());
+		return defaultValue;
 	}
 	
 	public Boolean getBoolean(String key) {
-		String value = get(key);
-		return (value != null) ? Boolean.parseBoolean(value) : null;
+		return getBoolean(key, null);
 	}
 	
 	public Boolean getBoolean(String key, Boolean defaultValue) {
-		String value = get(key);
-		return (value != null) ? Boolean.parseBoolean(value) : defaultValue;
+		String value = properties.getProperty(key);
+		if (value != null) {
+			value = value.toLowerCase().trim();
+			if ("true".equals(value))
+				return true;
+			else if ("false".equals(value))
+				return false;
+			throw new RuntimeException("The value can not parse to Boolean : " + value);
+		}
+		return defaultValue;
 	}
 	
 	public boolean containsKey(String key) {
